@@ -26,7 +26,7 @@ ostream& operator<<(ostream& os, vector<T> v) {
 		os << *first;
 		for (typename vector<T>::iterator i = ++first;
 				i != v.end(); ++i) {
-			os << *i << ", ";
+			os << ", " << *i;
 		}
 	}
 	return os;
