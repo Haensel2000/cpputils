@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -51,5 +52,12 @@ public:
 
 std::ostream& operator<<(std::ostream& os, const cpputils::debug::Printable& p);
 std::ostream& operator<<(std::ostream& os, const cpputils::debug::Printable* p);
+
+template <class T>
+const char* dstr(T obj) {
+	std::stringstream s;
+	s << obj;
+	return s.str().c_str();
+}
 
 #endif /* PRINT_H_ */
