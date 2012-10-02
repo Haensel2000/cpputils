@@ -25,11 +25,11 @@ namespace cpputils {
 namespace debug {
 
 template<class T>
-void print(ostream& os, vector<T>& v, const char* delim) {
-	typename vector<T>::iterator first = v.begin();
+void print(ostream& os, const vector<T>& v, const char* delim) {
+	typename vector<T>::const_iterator first = v.begin();
 	if (first != v.end()) {
 		os << *first;
-		for (typename vector<T>::iterator i = ++first; i != v.end(); ++i) {
+		for (typename vector<T>::const_iterator i = ++first; i != v.end(); ++i) {
 			os << delim << *i;
 		}
 	}
@@ -50,7 +50,7 @@ public:
 }
 
 template<class T>
-ostream& operator<<(ostream& os, vector<T>& v) {
+ostream& operator<<(ostream& os, const vector<T>& v) {
 	cpputils::debug::print(os, v, ", ");
 	return os;
 }
