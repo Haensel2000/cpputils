@@ -13,6 +13,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <map>
 
 using std::string;
 using std::vector;
@@ -29,7 +30,8 @@ void print(ostream& os, const vector<T>& v, const char* delim) {
 	typename vector<T>::const_iterator first = v.begin();
 	if (first != v.end()) {
 		os << *first;
-		for (typename vector<T>::const_iterator i = ++first; i != v.end(); ++i) {
+		for (typename vector<T>::const_iterator i = ++first; i != v.end();
+				++i) {
 			os << delim << *i;
 		}
 	}
@@ -43,6 +45,8 @@ public:
 
 	virtual void print(std::ostream& os) const = 0;
 
+	const char* toStr() const;
+
 };
 
 }
@@ -52,6 +56,21 @@ public:
 template<class T>
 ostream& operator<<(ostream& os, const vector<T>& v) {
 	cpputils::debug::print(os, v, ", ");
+	return os;
+}
+
+template<class K, class V>
+ostream& operator<<(ostream& os, const std::map<K, V>& v) {
+	os << "{";
+	typename std::map<K, V>::const_iterator first = v.begin();
+	if (first != v.end()) {
+		os << first->first << " : " << first->second;
+		for (typename std::map<K, V>::const_iterator i = ++first; i != v.end();
+				++i) {
+			os << ", " << first->first << " : " << first->second;
+		}
+	}
+	os << "}";
 	return os;
 }
 
