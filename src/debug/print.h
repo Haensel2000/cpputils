@@ -13,10 +13,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <set>
 #include <map>
 
 using std::string;
 using std::vector;
+using std::set;
 using std::ostream;
 
 ostream& operator<<(ostream& os, const std::string& s);
@@ -25,12 +27,12 @@ namespace cpputils {
 
 namespace debug {
 
-template<class T>
-void print(ostream& os, const vector<T>& v, const char* delim) {
-	typename vector<T>::const_iterator first = v.begin();
+template<class Container>
+void print(ostream& os, const Container& v, const char* delim) {
+	typename Container::const_iterator first = v.begin();
 	if (first != v.end()) {
 		os << *first;
-		for (typename vector<T>::const_iterator i = ++first; i != v.end();
+		for (typename Container::const_iterator i = ++first; i != v.end();
 				++i) {
 			os << delim << *i;
 		}
@@ -59,6 +61,12 @@ ostream& operator<<(ostream& os, const vector<T>& v) {
 	return os;
 }
 
+template<class T>
+ostream& operator<<(ostream& os, const set<T>& v) {
+	cpputils::debug::print(os, v, ", ");
+	return os;
+}
+
 template<class K, class V>
 ostream& operator<<(ostream& os, const std::map<K, V>& v) {
 	os << "{";
@@ -67,7 +75,7 @@ ostream& operator<<(ostream& os, const std::map<K, V>& v) {
 		os << first->first << " : " << first->second;
 		for (typename std::map<K, V>::const_iterator i = ++first; i != v.end();
 				++i) {
-			os << ", " << first->first << " : " << first->second;
+			os << ", " << i->first << " : " << i->second;
 		}
 	}
 	os << "}";
